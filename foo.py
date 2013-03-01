@@ -1,4 +1,4 @@
 def name(foo):
 	print foo
 
-name "Bhat"
+name "Bar"
