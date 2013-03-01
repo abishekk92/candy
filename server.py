@@ -11,7 +11,8 @@ class ServerHandler(HTTPSever.BaseHTTPRequestHandler):
 		s.send_response(200)
 		s.send_header("Content-type","text/html")
 		s.end_headers()
-		#read from the file from s.path and write back as the response
+		for line in open(s.path,'r').read():
+			s.wfile.write(line)
 
 if __name__="__main__":
 	server_class=HTTPSever.HTTPServer
