@@ -9,5 +9,5 @@ for config in configs:
 def get_hostname():
 	return config_set['HOSTNAME']
 def get_port():
-    	return config_set['PORT']
+    	return int(config_set['PORT'])
 

@@ -1,8 +1,8 @@
 import BaseHTTPServer as HTTPServer 
-# read the hostname fromt the config file
-
-
-class ServerHandler(HTTPSever.BaseHTTPRequestHandler):
+import config as config_parser
+HOSTNAME=config_parser.get_hostname()
+PORT=config_parser.get_port()
+class ServerHandler(HTTPServer.BaseHTTPRequestHandler):
 	def do_HEAD(s):
 		s.send_response(200)
 		s.send_header("Content-type","text/html")
@@ -14,13 +14,13 @@ class ServerHandler(HTTPSever.BaseHTTPRequestHandler):
 		for line in open(s.path,'r').read():
 			s.wfile.write(line)
 
-if __name__="__main__":
-	server_class=HTTPSever.HTTPServer
-	httpd=server_class((HOSTNAME,PORT),SeverHandler)
+if __name__=="__main__":
+	server_class=HTTPServer.HTTPServer
+	httpd=server_class((HOSTNAME,PORT),ServerHandler)
 	print "Server started at",HOSTNAME,PORT
 	try:
-		httpd.server_forever
-	except KeyboarIntterupt:
+		httpd.serve_forever()
+	except KeyboardInterrupt:
 		pass
 	httpd.server_close()
 
