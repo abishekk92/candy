@@ -1,8 +1,10 @@
-import BaseHTTPServer as HTTPServer 
+import eventlet
+from eventlet.green import BaseHTTPServer as HTTPServer 
 import config as config_parser
 import os
 HOSTNAME=config_parser.get_hostname()
 PORT=config_parser.get_port()
+number=0
 class ServerHandler(HTTPServer.BaseHTTPRequestHandler):
 	def do_HEAD(s):
 		s.send_response(200)
@@ -19,13 +21,12 @@ class ServerHandler(HTTPServer.BaseHTTPRequestHandler):
 		s.end_headers()
 		s.wfile.write(to_write)
 if __name__=="__main__":
-	server_class=HTTPServer.HTTPServer
-	httpd=server_class((HOSTNAME,PORT),ServerHandler)
+	server=HTTPServer.HTTPServer
+	httpd=server((HOSTNAME,PORT),ServerHandler)
 	print "Server started at",HOSTNAME,PORT
 	try:
 		httpd.serve_forever()
 	except KeyboardInterrupt:
-		pass
-	httpd.server_close()
+		httpd.server_close()
 
 
